@@ -1,0 +1,12 @@
+// COLOR VARIABLES
+$grey: #363636;
+$offWhite: #e2dcd4;
+
+// MIXINS
+
+// HOVER/FOCUS/ACTIVE
+@mixin hoverFocus {
+    &:hover, &:focus, &:active {
+        @content;
+    }
+}

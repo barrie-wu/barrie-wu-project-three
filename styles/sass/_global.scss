@@ -1,0 +1,65 @@
+// DEBUG
+// * {
+//     border: 1px solid red;
+// }
+
+// REMOVE DEFAULT STYLES
+* {
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    display: block;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+}
+
+
+// BACKGROUND IMAGES & COLORS
+body {
+    background-image: url(.././assets/backgroundImage.jpg);
+    letter-spacing: 1px;
+}
+
+header {
+    background-image: url(.././assets/header.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+// TYPOGRAPHY
+h1, h2 , button {
+    font-family: 'Amatic SC', cursive;
+}
+
+p, li, input, label {
+    font-family: 'Covered By Your Grace', cursive;
+}
+
+h1 {
+    font-size: 5rem;
+    line-height: .8;
+    color: $offWhite;
+}
+
+p, li {
+    font-size: 1.6rem;
+}
+
+.gameText {
+    font-size: 1.4rem;
+}
+
+
+// WRAPPER
+.wrapper {
+    max-width: 600px;
+    margin: 2vh auto;
+    width: 100%;
+}
+

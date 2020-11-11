@@ -1,0 +1,31 @@
+header {
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h1 {
+    margin-top: 0;
+    margin-left: 20px;
+}
+
+.characterProfile {
+    background-color: $grey;
+    color: $offWhite;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px;
+    p {
+        text-transform: uppercase;
+    }
+    li {
+        margin-left: 10px;
+        i {
+            color: red;
+        }
+    }
+    li:first-child {
+        margin-right: 15px;
+    }
+}

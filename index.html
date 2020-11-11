@@ -7,14 +7,52 @@
     <link rel="stylesheet" href="./styles/styles.css">
     <link type="image/png" href="./assets/favicon.png" rel="icon">
     <script src="https://kit.fontawesome.com/b98553b8ad.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            background-image: url(./assets/vikingBG2.jpg);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Covered+By+Your+Grace&display=swap"
+        rel="stylesheet">
 </head>
 <body>
-    
+    <div class="wrapper">
+        <header>
+            <h1>ragnarok</h1>
+            <div class="characterProfile">
+                <p>name:</p>
+                <ul>
+                    <li>HP:</li>
+                    <li><i class="far fa-heart"></i></li>
+                    <li><i class="far fa-heart"></i></li>
+                    <li><i class="far fa-heart"></i></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <section class="gameImage">
+                <img src="./assets/start.jpg" alt="Rays of a sunrise shining through a dense forest">
+            </section>
+            <section class="gameText gameTextStart">
+                <p>You are ready for your first adventure. What is your name?</p>
+                <form action="" class="characterName" name="characterName">
+                    <label for="characterName" class="srOnly">your character name</label>
+                    <input type="text" name="characterName" id="characterName" value="Loki">
+                    <button class="submitCharacterButton">ready</button>
+                </form>
+            </section>
+            <section class="gameText gameTextPlay">
+                <p>You ran into a werewolf! Get ready to fight! Choose your weapon carefully...</p>
+                <form action="" class="gameplay" name="gameplay">
+                    <fieldset>
+                        <label for="weapon1">Axe</label>
+                        <input type="radio" name="weapon" value="axe" id="weapon1">
+                        <label for="weapon2">Hammer</label>
+                        <input type="radio" name="weapon" value="hammer" id="weapon2">
+                        <label for="weapon3">Sword</label>
+                        <input type="radio" name="weapon" value="sword" id="weapon3">
+                    </fieldset>
+                    <button class="fightButton">fight</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,61 @@
+main {
+    .gameImage {
+        height: 40vh;
+        overflow: hidden;
+    }
+    .gameText {
+        background-color: $offWhite;
+        text-align: center;
+    }
+}
+
+.gameImage img {
+    width: 100%;
+}
+
+.gameText {
+    padding: 15px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    p {
+        padding-bottom: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        input {
+            text-align: center;
+            border: 2px solid $grey;
+            margin-bottom: 15px;
+        }
+        button {
+            font-weight: 700;
+            padding: 5px 15px;
+            border-radius: 5px;
+            background-color: $grey;
+            color: $offWhite;
+            border: none;
+            @include hoverFocus {
+                background-color: white;
+                color: $grey;
+            }
+        }
+    }
+}
+
+.gameplay fieldset {
+    border: none;
+    input {
+        margin-right: 50px;
+    }
+    input:last-child {
+        margin-right: 0;
+    }
+}
+
+.gameTextPlay {
+    display: none;
+}
+
