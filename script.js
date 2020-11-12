@@ -47,14 +47,7 @@ const scenes = {
     }
 }
 
-// CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
-const odds = {
-    bestOdds: [1,1,1,1,1,1,1,1,0,0],
-    betterOdds: [1,1,1,1,1,0,0,0,0,0],
-    worstOdds: [1,1,1,0,0,0,0,0,0,0]
-}
-
-// REUSAx vBLE RANDOMIZER FUNCTION
+// REUSABLE RANDOMIZER FUNCTION
 const randomizer = (array) => {
     const randomArrayIndex = Math.floor(Math.random() * array.length);
     return array[randomArrayIndex]
@@ -77,9 +70,8 @@ gameApp.gameStart = () => {
             $('.characterNameDisplay').text(`${newUserName}`);
             // FILL HEART CONTAINERS
             $('i').removeClass('far').addClass('fas');
-
+            // CHANGE GAME IMAGE TO FIRST scene obj
             $('.gameImage img').attr('src', `${scenes.first.image}`)
-
             // REVEAL GAME PLAY TEXT
             $('.gameTextPlay').show();
             // REMOVE CHARACTER NAME INPUT
@@ -89,6 +81,23 @@ gameApp.gameStart = () => {
             alert("Please enter a character name!");
         }
     });
+}
+
+// CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
+const odds = {
+    bestOdds: [1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    betterOdds: [1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+    worstOdds: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+}
+
+// FUNCTION TO ROLL ODDS DEPENDING ON CHOSEN WEAPON AND DISPLAY WIN/LOSE
+gameApp.gamePlay = () => {
+    const randomRoll = randomizer(odds.worstOdds);
+    if (randomRoll > 0) {
+        $('.gameImage img').attr('src', `${scenes.win.image}`)
+    } else {
+        $('.gameImage img').attr('src', `${scenes.gameOver.image}`)
+    }
 }
 
 
