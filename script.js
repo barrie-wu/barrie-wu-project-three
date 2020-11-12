@@ -36,7 +36,15 @@ const $characterNameInput = $('.characterNameInput');
 
 // CREATE OBJECT WITH SCENARIOS
 const scenes = {
-
+    first: {
+        image: `./assets/firstScene.jpg`
+    },
+    win: {
+        image: `./assets/winScene.jpg`
+    },
+    gameOver: {
+        image: `./assets/gameOverScene.jpg`
+    }
 }
 
 // CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
@@ -69,6 +77,9 @@ gameApp.gameStart = () => {
             $('.characterNameDisplay').text(`${newUserName}`);
             // FILL HEART CONTAINERS
             $('i').removeClass('far').addClass('fas');
+
+            $('.gameImage img').attr('src', `${scenes.first.image}`)
+
             // REVEAL GAME PLAY TEXT
             $('.gameTextPlay').show();
             // REMOVE CHARACTER NAME INPUT
