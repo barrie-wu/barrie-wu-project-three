@@ -352,6 +352,7 @@ main .gameText {
 }
 
 .gameText {
+  height: 200px;
   padding: 15px 50px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -389,6 +390,7 @@ main .gameText {
 }
 
 .gameText form button {
+  cursor: pointer;
   font-weight: 700;
   padding: 5px 15px;
   border-radius: 5px;

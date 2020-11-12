@@ -1,4 +1,4 @@
-// Get character name from a text input and stor it in a variable
+// Get character name from a text input and store it in a variable
 
 // Change innerHtml of element containing character name
 
@@ -21,3 +21,67 @@
     // Condintional for if loss occurs, change display of heart values
 
     // Restart game if hearts empty
+
+
+// CREATE NAMESPACE
+const gameApp = {};
+
+// APP init
+gameApp.init = () => {
+    gameApp.gameStart();
+};
+
+// jQuery CACHE
+const $characterNameInput = $('.characterNameInput');
+
+// CREATE OBJECT WITH SCENARIOS
+const scenes = {
+
+}
+
+// CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
+const odds = {
+    bestOdds: [1,1,1,1,1,1,1,1,0,0],
+    betterOdds: [1,1,1,1,1,0,0,0,0,0],
+    worstOdds: [1,1,1,0,0,0,0,0,0,0]
+}
+
+// REUSAx vBLE RANDOMIZER FUNCTION
+const randomizer = (array) => {
+    const randomArrayIndex = Math.floor(Math.random() * array.length);
+    return array[randomArrayIndex]
+}
+
+
+// FUNCTION TO ENTER CHARACTER NAME AND START GAME
+gameApp.gameStart = () => {
+    // CREATE EVENT LISTENER ON FORM SUBMIT
+    $('.characterNameForm').on('submit', function (event) {
+        // PREVENT DEFULT SUBMIT BEHAVIOUS
+        event.preventDefault();
+        // STORE characterName INTO A VARIABLE
+        const userName = $characterNameInput.val();
+        // ERROR HANDLING FOR EMPTY STRING
+        if (userName !== '') {
+            $characterNameInput.val('');
+            // CHANGE NAME BASED ON USER INPUT IF STRING
+            const newUserName = `${userName}`;
+            $('.characterNameDisplay').text(`${newUserName}`);
+            // FILL HEART CONTAINERS
+            $('i').removeClass('far').addClass('fas');
+            // REVEAL GAME PLAY TEXT
+            $('.gameTextPlay').show();
+            // REMOVE CHARACTER NAME INPUT
+            $('.gameTextStart').hide();
+        } else {
+            // ALERT IF EMPTY CHARACTER NAME STRING
+            alert("Please enter a character name!");
+        }
+    });
+}
+
+
+// DOCUMENT READY
+$(function() {
+    gameApp.init();
+});

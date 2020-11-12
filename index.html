@@ -15,7 +15,7 @@
         <header>
             <h1>ragnarok</h1>
             <div class="characterProfile">
-                <p>name:</p>
+                <p class="characterNameDisplay">name:</p>
                 <ul>
                     <li>HP:</li>
                     <li><i class="far fa-heart"></i></li>
@@ -30,10 +30,10 @@
             </section>
             <section class="gameText gameTextStart">
                 <p>You are ready for your first adventure. What is your name?</p>
-                <form action="" class="characterName" name="characterName">
+                <form action="" class="characterNameForm" name="characterName">
                     <label for="characterName" class="srOnly">your character name</label>
-                    <input type="text" name="characterName" id="characterName" value="Loki">
-                    <button class="submitCharacterButton">ready</button>
+                    <input class="characterNameInput" type="text" name="characterName" id="characterName">
+                    <button type="submit" class="submitCharacterButton">ready</button>
                 </form>
             </section>
             <section class="gameText gameTextPlay">
@@ -47,7 +47,7 @@
                         <label for="weapon3">Sword</label>
                         <input type="radio" name="weapon" value="sword" id="weapon3">
                     </fieldset>
-                    <button class="fightButton">fight</button>
+                    <button type="submit" class="fightButton">fight</button>
                 </form>
             </section>
         </main>
