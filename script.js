@@ -35,7 +35,7 @@ const scenes = {
         image: `./assets/firstScene.jpg`
     },
     win: {
-        text: `You Won!`,
+        text: `You live to see another day!`,
         image: `./assets/winScene.jpg`
     },
     gameOver: {
@@ -46,9 +46,9 @@ const scenes = {
 
 // CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
 const odds = {
-    bestOdds: [1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    betterOdds: [1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
-    worstOdds: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+    bestOdds: [1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    betterOdds: [1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+    worstOdds: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 }
 
 // REUSABLE RANDOMIZER FUNCTION
@@ -91,8 +91,6 @@ app.userWeaponChoice = function () {
     // EVENT LISTENER ON GAMEPLAY FORM SUBMIT
     $('.gameplay').on('submit', function (event) {
         event.preventDefault();
-        // MAKE CLICKABLE ONCE
-        $(this).off(event);
         // PUT USER INPUT IN A VARIABLE
         const userWeaponInput = $('input[name=weapon]:checked').val();
         // CONDITIONAL OF USER CHOICE TO ROLL ODDS
@@ -103,7 +101,8 @@ app.userWeaponChoice = function () {
         } else if (userWeaponInput === 'sword') {
             app.gamePlay(odds.worstOdds);
         };
-
+        // MAKE SUBMIT CLICKABLE ONCE
+        $(this).off(event);
     });
 }
 
