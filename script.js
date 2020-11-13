@@ -87,6 +87,10 @@ app.fillHearts = () => {
     })
 }
 
+app.emptyHearts = ()  => {
+    
+}
+
 
 // FUNCTION TO ENTER CHARACTER NAME AND START GAME
 app.gameStart = () => {
