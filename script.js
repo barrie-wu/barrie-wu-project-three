@@ -34,15 +34,15 @@ const $gameplayText = $('.gameTextPlay p');
 // CREATE OBJECT WITH SCENARIOS
 const scenes = {
     first: {
-        image: `./assets/firstScene.jpg`
+        image: `./assets/scene1.jpg`
     },
     win: {
         text: `You live to see another day!`,
-        image: `./assets/winScene.jpg`
+        image: `./assets/sceneWin.jpg`
     },
     gameOver: {
         text: `You died...`,
-        image: `./assets/gameOverScene.jpg`
+        image: `./assets/sceneGameOver.jpg`
     }
 }
 
@@ -70,7 +70,6 @@ app.fillHearts = () => {
     })
 }
 
-hgyvf
 
 // FUNCTION TO ENTER CHARACTER NAME AND START GAME
 app.gameStart = () => {
