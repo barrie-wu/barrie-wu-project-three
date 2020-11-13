@@ -24,12 +24,7 @@
 
 
 // CREATE NAMESPACE
-const gameApp = {};
-
-// APP init
-gameApp.init = () => {
-    gameApp.gameStart();
-};
+const app = {};
 
 // jQuery CACHE
 const $characterNameInput = $('.characterNameInput');
@@ -40,22 +35,30 @@ const scenes = {
         image: `./assets/firstScene.jpg`
     },
     win: {
+        text: `You Won!`,
         image: `./assets/winScene.jpg`
     },
     gameOver: {
+        text: `You died...`,
         image: `./assets/gameOverScene.jpg`
     }
 }
 
+// CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
+const odds = {
+    bestOdds: [1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+    betterOdds: [1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+    worstOdds: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+}
+
 // REUSABLE RANDOMIZER FUNCTION
-const randomizer = (array) => {
+app.randomizer = (array) => {
     const randomArrayIndex = Math.floor(Math.random() * array.length);
     return array[randomArrayIndex]
 }
 
-
 // FUNCTION TO ENTER CHARACTER NAME AND START GAME
-gameApp.gameStart = () => {
+app.gameStart = () => {
     // CREATE EVENT LISTENER ON FORM SUBMIT
     $('.characterNameForm').on('submit', function (event) {
         // PREVENT DEFULT SUBMIT BEHAVIOUS
@@ -83,25 +86,44 @@ gameApp.gameStart = () => {
     });
 }
 
-// CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
-const odds = {
-    bestOdds: [1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    betterOdds: [1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
-    worstOdds: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+// GET USERS INPUT FROM RADIO CHOICES
+app.userWeaponChoice = function () {
+    // EVENT LISTENER ON GAMEPLAY FORM SUBMIT
+    $('.gameplay').on('submit', function (event) {
+        event.preventDefault();
+        // PUT USER INPUT IN A VARIABLE
+        const userWeaponInput = $('input[name=weapon]:checked').val();
+        // CONDITIONAL OF USER CHOICE TO ROLL ODDS
+        if (userWeaponInput === 'axe') {
+            app.gamePlay(odds.bestOdds);
+        } else if (userWeaponInput === 'hammer') {
+            app.gamePlay(odds.betterOdds);
+        } else if (userWeaponInput === 'sword') {
+            app.gamePlay(odds.worstOdds);
+        };
+
+    });
 }
 
 // FUNCTION TO ROLL ODDS DEPENDING ON CHOSEN WEAPON AND DISPLAY WIN/LOSE
-gameApp.gamePlay = () => {
-    const randomRoll = randomizer(odds.worstOdds);
+app.gamePlay = (odds) => {
+    const randomRoll = app.randomizer(odds);
     if (randomRoll > 0) {
-        $('.gameImage img').attr('src', `${scenes.win.image}`)
+        $('.gameImage img').attr('src', `${scenes.win.image}`);
+        $('.gameTextPlay p').text(`${scenes.win.text}`);
     } else {
-        $('.gameImage img').attr('src', `${scenes.gameOver.image}`)
+        $('.gameImage img').attr('src', `${scenes.gameOver.image}`);
+        $('.gameTextPlay p').text(`${scenes.gameOver.text}`);
     }
 }
 
+// APP init
+app.init = () => {
+    app.gameStart();
+    app.userWeaponChoice();
+};
 
 // DOCUMENT READY
 $(function() {
-    gameApp.init();
+    app.init();
 });
