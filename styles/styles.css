@@ -338,13 +338,26 @@ h1 {
 }
 
 main .gameImage {
-  height: 40vh;
+  height: auto;
   overflow: hidden;
 }
 
 main .gameText {
   background-color: #e2dcd4;
   text-align: center;
+}
+
+.gameImage {
+  position: relative;
+}
+
+.gameImage .overlay {
+  background-image: url(.././assets/gameOverOverlay.jpg);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 99;
+  opacity: 0;
 }
 
 .gameImage img {

@@ -1,6 +1,6 @@
 main {
     .gameImage {
-        height: 40vh;
+        height: auto;
         overflow: hidden;
     }
     .gameText {
@@ -9,8 +9,19 @@ main {
     }
 }
 
-.gameImage img {
-    width: 100%;
+.gameImage {
+    position: relative;
+    .overlay {
+        background-image: url(.././assets/gameOverOverlay.jpg);
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        z-index: 99;
+        opacity: 0;
+    }
+    img {
+        width: 100%;
+    }
 }
 
 .gameText {
@@ -18,7 +29,7 @@ main {
     padding: 15px 50px;
     display: flex;
     flex-direction: column;
-    align-items: space-between;
+    justify-content: space-between;
     p {
         padding-bottom: 20px;
     }

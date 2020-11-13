@@ -110,11 +110,18 @@ app.userWeaponChoice = function () {
 app.gamePlay = (odds) => {
     const randomRoll = app.randomizer(odds);
     if (randomRoll > 0) {
+        // DISPLAY WIN IMAGE & TEXT
         $('.gameImage img').attr('src', `${scenes.win.image}`);
         $('.gameTextPlay p').text(`${scenes.win.text}`);
     } else {
+        // DISPLAY LOSE IMAGE & TEXT
         $('.gameImage img').attr('src', `${scenes.gameOver.image}`);
         $('.gameTextPlay p').text(`${scenes.gameOver.text}`);
+        // ANIMTE BLACK OVERLAY ON LOSE SCREEN
+        $('.overlay').animate({
+            opacity: 1,
+        }, 10000, function () {
+        });
     }
 }
 
