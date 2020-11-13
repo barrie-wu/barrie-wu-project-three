@@ -91,6 +91,8 @@ app.userWeaponChoice = function () {
     // EVENT LISTENER ON GAMEPLAY FORM SUBMIT
     $('.gameplay').on('submit', function (event) {
         event.preventDefault();
+        // MAKE CLICKABLE ONCE
+        $(this).off(event);
         // PUT USER INPUT IN A VARIABLE
         const userWeaponInput = $('input[name=weapon]:checked').val();
         // CONDITIONAL OF USER CHOICE TO ROLL ODDS
