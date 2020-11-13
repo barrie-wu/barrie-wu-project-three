@@ -59,6 +59,14 @@ app.randomizer = (array) => {
     return array[randomArrayIndex]
 }
 
+app.hearts = () => {
+    $('i').each(function () {
+        console.log($(this))
+    });
+}
+
+app.hearts();
+
 // FUNCTION TO ENTER CHARACTER NAME AND START GAME
 app.gameStart = () => {
     // CREATE EVENT LISTENER ON FORM SUBMIT
@@ -75,11 +83,6 @@ app.gameStart = () => {
             $('.characterNameDisplay').text(`${displayUserName}`);
             // FILL HEART CONTAINERS
             $('i').removeClass('far').addClass('fas');
-    // $('i').each(function () {
-    //     setTimeout(function() {
-    //         $(this).removeClass('far').addClass('fas');
-    //     }, 1000);
-    // });
             // CHANGE GAME IMAGE TO FIRST scene obj
             $('.gameImage img').attr('src', `${scenes.first.image}`)
             // REVEAL GAME PLAY TEXT
