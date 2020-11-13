@@ -34,7 +34,24 @@ const $gameplayText = $('.gameTextPlay p');
 // CREATE OBJECT WITH SCENARIOS
 const scenes = {
     first: {
+        text: `You ran into a werewolf! Are you ready to fight? Choose carefully...`,
         image: `./assets/scene1.jpg`
+    },
+    second: {
+        text: `Another band of vikings are in your way!`,
+        image: `./assets/scene2.jpg`
+    },
+    third: {
+        text: `The dead have risen to fight again. Will you keep fighting?`,
+        image: `./assets/scene3.jpg`
+    },
+    fourth: {
+        text: `Your fellow vikings have all perished...How will you proceed...`,
+        image: `./assets/scene4.jpg`
+    },
+    final: {
+        text: `Hel is impressed with your brutality, and demands your soul be taken to the underworld under her dominion...`,
+        image: `./assets/scenefinal.jpg`        
     },
     win: {
         text: `You live to see another day!`,
@@ -66,7 +83,7 @@ app.fillHearts = () => {
     $('i').each(function (i, elem) {
         setTimeout(function () {
             $(elem).removeClass('far').addClass('fas');
-        }, 600 * i);
+        }, 400 * i);
     })
 }
 
@@ -88,7 +105,9 @@ app.gameStart = () => {
             // CALL FUNCTION TO FILL HEART CONTAINERS
             app.fillHearts();
             // CHANGE GAME IMAGE TO FIRST scene obj
-            $('.gameImage img').attr('src', `${scenes.first.image}`)
+            $gameplayImage.attr('src', `${scenes.first.image}`)
+            // FILL .gameTextPlay WITH FIRST SCENE TEXT PROPERTY
+            $gameplayText.text(`${scenes.first.text}`);
             // REVEAL GAME PLAY TEXT
             $('.gameTextPlay').show();
             // REMOVE CHARACTER NAME INPUT

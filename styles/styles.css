@@ -432,3 +432,21 @@ main .gameText {
 .gameTextPlay {
   display: none;
 }
+
+@media (max-width: 450px) {
+  h1 {
+    font-size: 4rem;
+  }
+  p, li {
+    font-size: 1.2rem;
+  }
+  .gameText {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .gameplay fieldset input {
+    margin-right: 10px;
+  }
+}
