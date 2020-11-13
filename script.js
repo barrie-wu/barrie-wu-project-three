@@ -28,6 +28,8 @@ const app = {};
 
 // jQuery CACHE
 const $characterNameInput = $('.characterNameInput');
+const $gameplayImage = $('.gameImage img');
+const $gameplayText = $('.gameTextPlay p');
 
 // CREATE OBJECT WITH SCENARIOS
 const scenes = {
@@ -69,10 +71,15 @@ app.gameStart = () => {
         if (userName !== '') {
             $characterNameInput.val('');
             // CHANGE NAME BASED ON USER INPUT IF STRING
-            const newUserName = `${userName}`;
-            $('.characterNameDisplay').text(`${newUserName}`);
+            const displayUserName = `${userName}`;
+            $('.characterNameDisplay').text(`${displayUserName}`);
             // FILL HEART CONTAINERS
             $('i').removeClass('far').addClass('fas');
+    // $('i').each(function () {
+    //     setTimeout(function() {
+    //         $(this).removeClass('far').addClass('fas');
+    //     }, 1000);
+    // });
             // CHANGE GAME IMAGE TO FIRST scene obj
             $('.gameImage img').attr('src', `${scenes.first.image}`)
             // REVEAL GAME PLAY TEXT
@@ -94,11 +101,11 @@ app.userWeaponChoice = function () {
         // PUT USER INPUT IN A VARIABLE
         const userWeaponInput = $('input[name=weapon]:checked').val();
         // CONDITIONAL OF USER CHOICE TO ROLL ODDS
-        if (userWeaponInput === 'axe') {
+        if (userWeaponInput === 'fight') {
             app.gamePlay(odds.bestOdds);
-        } else if (userWeaponInput === 'hammer') {
+        } else if (userWeaponInput === 'defend') {
             app.gamePlay(odds.betterOdds);
-        } else if (userWeaponInput === 'sword') {
+        } else if (userWeaponInput === 'flee') {
             app.gamePlay(odds.worstOdds);
         };
         // MAKE SUBMIT CLICKABLE ONCE
@@ -111,17 +118,16 @@ app.gamePlay = (odds) => {
     const randomRoll = app.randomizer(odds);
     if (randomRoll > 0) {
         // DISPLAY WIN IMAGE & TEXT
-        $('.gameImage img').attr('src', `${scenes.win.image}`);
-        $('.gameTextPlay p').text(`${scenes.win.text}`);
+        $gameplayImage.attr('src', `${scenes.win.image}`);
+        $gameplayText.text(`${scenes.win.text}`);
     } else {
         // DISPLAY LOSE IMAGE & TEXT
-        $('.gameImage img').attr('src', `${scenes.gameOver.image}`);
-        $('.gameTextPlay p').text(`${scenes.gameOver.text}`);
-        // ANIMTE BLACK OVERLAY ON LOSE SCREEN
+        $gameplayImage.attr('src', `${scenes.gameOver.image}`);
+        $gameplayText.text(`${scenes.gameOver.text}`);
+        // ANIMATE BLACK OVERLAY ON LOSE SCREEN
         $('.overlay').animate({
             opacity: 1,
-        }, 10000, function () {
-        });
+        }, 10000, function () {});
     }
 }
 
