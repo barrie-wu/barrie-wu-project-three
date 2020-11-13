@@ -53,19 +53,24 @@ const odds = {
     worstOdds: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 }
 
-// REUSABLE RANDOMIZER FUNCTION
+// REUSABLE RANDOMIZER FUNCTION USING Math.random ON ANY ARRAY
 app.randomizer = (array) => {
     const randomArrayIndex = Math.floor(Math.random() * array.length);
     return array[randomArrayIndex]
 }
 
-app.hearts = () => {
-    $('i').each(function () {
-        console.log($(this))
-    });
+// .setTimeout FUNCTION TO ITERATE THROUGH EACH <i> AND CHANGE CLASS OF elem
+// PARAMS i = EACH ITERATION OF ELEMENT, elem = ELEMENT ITSELF
+// SET TIME DELAY TO .5s
+app.fillHearts = () => {
+    $('i').each(function (i, elem) {
+        setTimeout(function () {
+            $(elem).removeClass('far').addClass('fas');
+        }, 600 * i);
+    })
 }
 
-app.hearts();
+hgyvf
 
 // FUNCTION TO ENTER CHARACTER NAME AND START GAME
 app.gameStart = () => {
@@ -81,8 +86,8 @@ app.gameStart = () => {
             // CHANGE NAME BASED ON USER INPUT IF STRING
             const displayUserName = `${userName}`;
             $('.characterNameDisplay').text(`${displayUserName}`);
-            // FILL HEART CONTAINERS
-            $('i').removeClass('far').addClass('fas');
+            // CALL FUNCTION TO FILL HEART CONTAINERS
+            app.fillHearts();
             // CHANGE GAME IMAGE TO FIRST scene obj
             $('.gameImage img').attr('src', `${scenes.first.image}`)
             // REVEAL GAME PLAY TEXT
