@@ -32,36 +32,37 @@ const $gameplayImage = $('.gameImage img');
 const $gameplayText = $('.gameTextPlay p');
 
 // CREATE OBJECT WITH SCENARIOS
-const scenes = {
-    first: {
+const scenes = [
+    {
         text: `You ran into a werewolf! Are you ready to fight? Choose carefully...`,
         image: `./assets/scene1.jpg`
     },
-    second: {
+    {
         text: `Another band of vikings are in your way!`,
         image: `./assets/scene2.jpg`
     },
-    third: {
+    {
         text: `The dead have risen to fight again. Will you keep fighting?`,
         image: `./assets/scene3.jpg`
     },
-    fourth: {
+    {
         text: `Your fellow vikings have all perished...How will you proceed...`,
         image: `./assets/scene4.jpg`
     },
-    final: {
-        text: `Hel is impressed with your brutality, and demands your soul be taken to the underworld under her dominion...`,
+    {
+        text: `Hel is impressed, and demands your soul be taken to the underworld under her dominion...`,
         image: `./assets/scenefinal.jpg`        
     },
-    win: {
+    {
         text: `You live to see another day!`,
         image: `./assets/sceneWin.jpg`
     },
-    gameOver: {
+    {
         text: `You died...`,
         image: `./assets/sceneGameOver.jpg`
     }
-}
+]
+
 
 // CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
 const odds = {
@@ -84,7 +85,7 @@ app.fillHearts = () => {
         setTimeout(function () {
             $(elem).removeClass('far').addClass('fas');
         }, 400 * i);
-    })
+    });
 }
 
 
@@ -105,9 +106,9 @@ app.gameStart = () => {
             // CALL FUNCTION TO FILL HEART CONTAINERS
             app.fillHearts();
             // CHANGE GAME IMAGE TO FIRST scene obj
-            $gameplayImage.attr('src', `${scenes.first.image}`)
+            $gameplayImage.attr('src', `${scenes[0].image}`)
             // FILL .gameTextPlay WITH FIRST SCENE TEXT PROPERTY
-            $gameplayText.text(`${scenes.first.text}`);
+            $gameplayText.text(`${scenes[0].text}`);
             // REVEAL GAME PLAY TEXT
             $('.gameTextPlay').show();
             // REMOVE CHARACTER NAME INPUT
@@ -115,14 +116,18 @@ app.gameStart = () => {
         } else {
             // ALERT IF EMPTY CHARACTER NAME STRING
             alert("Please enter a character name!");
-        }
+        };
     });
 }
 
 // GET USERS INPUT FROM RADIO CHOICES
 app.userWeaponChoice = function () {
+
+    // DEFINE A COUNTER OUTSIDE click function FOR CLICK INCREMENT
+    counter = 0
     // EVENT LISTENER ON GAMEPLAY FORM SUBMIT
-    $('.gameplay').on('submit', function (event) {
+    $('.fightButton').on('click', function (event) {
+        // PREVENT SUBMIT DEFAULT
         event.preventDefault();
         // PUT USER INPUT IN A VARIABLE
         const userWeaponInput = $('input[name=weapon]:checked').val();
@@ -134,27 +139,35 @@ app.userWeaponChoice = function () {
         } else if (userWeaponInput === 'flee') {
             app.gamePlay(odds.worstOdds);
         };
-        // MAKE SUBMIT CLICKABLE ONCE
-        $(this).off(event);
+        // CLICK THROUGH SCENES
+        // USE counter VARIABLE TO ITERATE THROUGH scenes[item]
+        counter = counter + 1;
+        $gameplayImage.attr('src', `${scenes[counter].image}`);
+        $gameplayText.text(`${scenes[counter].text}`);
+        // STOP CLICKABLE BEFORE WIN/LOSE SCENES
+        if (counter >= 4) {
+            $(this).off(event);
+        }
     });
 }
 
 // FUNCTION TO ROLL ODDS DEPENDING ON CHOSEN WEAPON AND DISPLAY WIN/LOSE
 app.gamePlay = (odds) => {
     const randomRoll = app.randomizer(odds);
-    if (randomRoll > 0) {
-        // DISPLAY WIN IMAGE & TEXT
-        $gameplayImage.attr('src', `${scenes.win.image}`);
-        $gameplayText.text(`${scenes.win.text}`);
-    } else {
-        // DISPLAY LOSE IMAGE & TEXT
-        $gameplayImage.attr('src', `${scenes.gameOver.image}`);
-        $gameplayText.text(`${scenes.gameOver.text}`);
-        // ANIMATE BLACK OVERLAY ON LOSE SCREEN
-        $('.overlay').animate({
-            opacity: 1,
-        }, 10000, function () {});
-    }
+        // SET ROLL CONDITIONAL
+        if (randomRoll > 0) {
+            // DISPLAY WIN IMAGE & TEXT
+                            // $gameplayImage.attr('src', `${scenes[5].image}`);
+                            // $gameplayText.text(`${scenes[5].text}`);
+        } else {
+            // DISPLAY LOSE IMAGE & TEXT
+                            // $gameplayImage.attr('src', `${scenes[6].image}`);
+                            // $gameplayText.text(`${scenes[6].text}`);
+            // ANIMATE BLACK OVERLAY ON LOSE SCREEN
+                            // $('.overlay').animate({
+                            //     opacity: 1,
+                            // }, 10000, function () {});
+        };
 }
 
 // APP init
