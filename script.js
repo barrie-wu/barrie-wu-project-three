@@ -30,15 +30,16 @@ const app = {};
 const $characterNameInput = $('.characterNameInput');
 const $gameplayImage = $('.gameImage img');
 const $gameplayText = $('.gameTextPlay p');
+const $heartConatiner = $('i');
 
-// CREATE OBJECT WITH SCENARIOS
+// CREATE OBJECT WITH SCENES
 const scenes = [
     {
         text: `You ran into a werewolf! Are you ready to fight? Choose carefully...`,
         image: `./assets/scene1.jpg`
     },
     {
-        text: `Another band of vikings are in your way!`,
+        text: `Another band of vikings are in your way! Will you run, or stand and fight!?`,
         image: `./assets/scene2.jpg`
     },
     {
@@ -79,11 +80,11 @@ app.randomizer = (array) => {
 
 // .setTimeout FUNCTION TO ITERATE THROUGH EACH <i> AND CHANGE CLASS OF elem
 // PARAMS i = EACH ITERATION OF ELEMENT, elem = ELEMENT ITSELF
-// SET TIME DELAY TO .5s
+// SET TIME DELAY TO .4s
 app.fillHearts = () => {
-    $('i').each(function (i, elem) {
+    $heartConatiner.each(function (i, elem) {
         setTimeout(function () {
-            $(elem).removeClass('far').addClass('fas');
+            $(elem).toggleClass('far fas');
         }, 400 * i);
     });
 }
@@ -124,7 +125,9 @@ app.gameStart = () => {
 app.userWeaponChoice = function () {
 
     // DEFINE A COUNTER OUTSIDE click function FOR CLICK INCREMENT
-    counter = 0
+    // DEFINE SECOND COUNTER FOR HEART COUNTING
+    let counter = 0;
+    let heartCounter = -1;
     // EVENT LISTENER ON GAMEPLAY FORM SUBMIT
     $('.fightButton').on('click', function (event) {
         // PREVENT SUBMIT DEFAULT
@@ -132,42 +135,48 @@ app.userWeaponChoice = function () {
         // PUT USER INPUT IN A VARIABLE
         const userWeaponInput = $('input[name=weapon]:checked').val();
         // CONDITIONAL OF USER CHOICE TO ROLL ODDS
+        // STORE oddsOutcome IN VARIABLE OUTIDE OF CONDITIONAL FOR heartContainer CONDITIONAL
+        oddsOutcome = 0
         if (userWeaponInput === 'fight') {
-            app.gamePlay(odds.bestOdds);
+            oddsOutcome = app.randomizer(odds.bestOdds);
         } else if (userWeaponInput === 'defend') {
-            app.gamePlay(odds.betterOdds);
+            oddsOutcome = app.randomizer(odds.betterOdds);
         } else if (userWeaponInput === 'flee') {
-            app.gamePlay(odds.worstOdds);
+            oddsOutcome = app.randomizer(odds.worstOdds);
         };
+
+        // USE oddsOutcome TO CREATE CONDITIONAL IF LOSS (0) IS ROLLED
+        if (oddsOutcome < 1) {
+            // ITERATE THROUGH HEARTS EACH CLICK
+            heartCounter = heartCounter + 1;
+            // CHANGE <i>s TO AN ARRAY AND REVERSE ORDER 
+            const heartContainer = $heartConatiner.toArray().reverse();
+            heartContainer[heartCounter].className = 'far fa-heart';
+        }
+
         // CLICK THROUGH SCENES
         // USE counter VARIABLE TO ITERATE THROUGH scenes[item]
         counter = counter + 1;
         $gameplayImage.attr('src', `${scenes[counter].image}`);
         $gameplayText.text(`${scenes[counter].text}`);
-        // STOP CLICKABLE BEFORE WIN/LOSE SCENES
-        if (counter >= 4) {
+        // STOP CLICK EVENT BEFORE LOSE SCENE
+        if (counter >= 5) {
             $(this).off(event);
         }
-    });
-}
 
-// FUNCTION TO ROLL ODDS DEPENDING ON CHOSEN WEAPON AND DISPLAY WIN/LOSE
-app.gamePlay = (odds) => {
-    const randomRoll = app.randomizer(odds);
-        // SET ROLL CONDITIONAL
-        if (randomRoll > 0) {
-            // DISPLAY WIN IMAGE & TEXT
-                            // $gameplayImage.attr('src', `${scenes[5].image}`);
-                            // $gameplayText.text(`${scenes[5].text}`);
-        } else {
+        // CONDITIONAL IF HEARTS ARE COUNTED THROUGH, DISPLAY GAME OVER
+        // PLACED AFTER EVERYTHING SO IT RUNS LAST
+        if (heartCounter >= 2) {
+            $(this).off(event);
             // DISPLAY LOSE IMAGE & TEXT
-                            // $gameplayImage.attr('src', `${scenes[6].image}`);
-                            // $gameplayText.text(`${scenes[6].text}`);
+            $gameplayImage.attr('src', `${scenes[6].image}`);
+            $gameplayText.text(`${scenes[6].text}`);
             // ANIMATE BLACK OVERLAY ON LOSE SCREEN
-                            // $('.overlay').animate({
-                            //     opacity: 1,
-                            // }, 10000, function () {});
-        };
+            $('.overlay').animate({
+                opacity: 1,
+            }, 10000, function () { });
+        }
+    });
 }
 
 // APP init
