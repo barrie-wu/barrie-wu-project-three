@@ -433,6 +433,29 @@ main .gameText {
   display: none;
 }
 
+footer {
+  color: #e2dcd4;
+  background-color: #363636;
+  text-align: center;
+  padding: 5px;
+}
+
+footer p {
+  margin: 0 20px;
+  font-size: .6rem;
+}
+
+footer p a {
+  color: #e2dcd4;
+  text-decoration: none;
+  -webkit-transition: color .6s;
+  transition: color .6s;
+}
+
+footer p a:hover, footer p a:focus, footer p a:active {
+  color: red;
+}
+
 @media (max-width: 450px) {
   h1 {
     font-size: 4rem;

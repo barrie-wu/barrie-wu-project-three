@@ -30,38 +30,40 @@ const app = {};
 const $characterNameInput = $('.characterNameInput');
 const $gameplayImage = $('.gameImage img');
 const $gameplayText = $('.gameTextPlay p');
+const $heartConatiner = $('i');
 
-// CREATE OBJECT WITH SCENARIOS
-const scenes = {
-    first: {
+// CREATE OBJECT WITH SCENES
+const scenes = [
+    {
         text: `You ran into a werewolf! Are you ready to fight? Choose carefully...`,
         image: `./assets/scene1.jpg`
     },
-    second: {
-        text: `Another band of vikings are in your way!`,
+    {
+        text: `Another band of vikings are in your way! Will you run, or stand and fight!?`,
         image: `./assets/scene2.jpg`
     },
-    third: {
+    {
         text: `The dead have risen to fight again. Will you keep fighting?`,
         image: `./assets/scene3.jpg`
     },
-    fourth: {
+    {
         text: `Your fellow vikings have all perished...How will you proceed...`,
         image: `./assets/scene4.jpg`
     },
-    final: {
-        text: `Hel is impressed with your brutality, and demands your soul be taken to the underworld under her dominion...`,
+    {
+        text: `Hel is impressed, and demands your soul be taken to the underworld under her dominion...`,
         image: `./assets/scenefinal.jpg`        
     },
-    win: {
+    {
         text: `You live to see another day!`,
         image: `./assets/sceneWin.jpg`
     },
-    gameOver: {
+    {
         text: `You died...`,
         image: `./assets/sceneGameOver.jpg`
     }
-}
+]
+
 
 // CREATE ODDS OBJECT WITH VARYING ODDS ARRAYS
 const odds = {
@@ -78,13 +80,13 @@ app.randomizer = (array) => {
 
 // .setTimeout FUNCTION TO ITERATE THROUGH EACH <i> AND CHANGE CLASS OF elem
 // PARAMS i = EACH ITERATION OF ELEMENT, elem = ELEMENT ITSELF
-// SET TIME DELAY TO .5s
+// SET TIME DELAY TO .4s
 app.fillHearts = () => {
-    $('i').each(function (i, elem) {
+    $heartConatiner.each(function (i, elem) {
         setTimeout(function () {
-            $(elem).removeClass('far').addClass('fas');
+            $(elem).toggleClass('far fas');
         }, 400 * i);
-    })
+    });
 }
 
 app.emptyHearts = ()  => {
@@ -109,9 +111,9 @@ app.gameStart = () => {
             // CALL FUNCTION TO FILL HEART CONTAINERS
             app.fillHearts();
             // CHANGE GAME IMAGE TO FIRST scene obj
-            $gameplayImage.attr('src', `${scenes.first.image}`)
+            $gameplayImage.attr('src', `${scenes[0].image}`)
             // FILL .gameTextPlay WITH FIRST SCENE TEXT PROPERTY
-            $gameplayText.text(`${scenes.first.text}`);
+            $gameplayText.text(`${scenes[0].text}`);
             // REVEAL GAME PLAY TEXT
             $('.gameTextPlay').show();
             // REMOVE CHARACTER NAME INPUT
@@ -119,46 +121,66 @@ app.gameStart = () => {
         } else {
             // ALERT IF EMPTY CHARACTER NAME STRING
             alert("Please enter a character name!");
-        }
+        };
     });
 }
 
 // GET USERS INPUT FROM RADIO CHOICES
 app.userWeaponChoice = function () {
+
+    // DEFINE A COUNTER OUTSIDE click function FOR CLICK INCREMENT
+    // DEFINE SECOND COUNTER FOR HEART COUNTING
+    let counter = 0;
+    let heartCounter = -1;
     // EVENT LISTENER ON GAMEPLAY FORM SUBMIT
-    $('.gameplay').on('submit', function (event) {
+    $('.fightButton').on('click', function (event) {
+        // PREVENT SUBMIT DEFAULT
         event.preventDefault();
         // PUT USER INPUT IN A VARIABLE
         const userWeaponInput = $('input[name=weapon]:checked').val();
         // CONDITIONAL OF USER CHOICE TO ROLL ODDS
+        // STORE oddsOutcome IN VARIABLE OUTIDE OF CONDITIONAL FOR heartContainer CONDITIONAL
+        oddsOutcome = 0
         if (userWeaponInput === 'fight') {
-            app.gamePlay(odds.bestOdds);
+            oddsOutcome = app.randomizer(odds.bestOdds);
         } else if (userWeaponInput === 'defend') {
-            app.gamePlay(odds.betterOdds);
+            oddsOutcome = app.randomizer(odds.betterOdds);
         } else if (userWeaponInput === 'flee') {
-            app.gamePlay(odds.worstOdds);
+            oddsOutcome = app.randomizer(odds.worstOdds);
         };
-        // MAKE SUBMIT CLICKABLE ONCE
-        $(this).off(event);
-    });
-}
 
-// FUNCTION TO ROLL ODDS DEPENDING ON CHOSEN WEAPON AND DISPLAY WIN/LOSE
-app.gamePlay = (odds) => {
-    const randomRoll = app.randomizer(odds);
-    if (randomRoll > 0) {
-        // DISPLAY WIN IMAGE & TEXT
-        $gameplayImage.attr('src', `${scenes.win.image}`);
-        $gameplayText.text(`${scenes.win.text}`);
-    } else {
-        // DISPLAY LOSE IMAGE & TEXT
-        $gameplayImage.attr('src', `${scenes.gameOver.image}`);
-        $gameplayText.text(`${scenes.gameOver.text}`);
-        // ANIMATE BLACK OVERLAY ON LOSE SCREEN
-        $('.overlay').animate({
-            opacity: 1,
-        }, 10000, function () {});
-    }
+        // USE oddsOutcome TO CREATE CONDITIONAL IF LOSS (0) IS ROLLED
+        if (oddsOutcome < 1) {
+            // ITERATE THROUGH HEARTS EACH CLICK
+            heartCounter = heartCounter + 1;
+            // CHANGE <i>s TO AN ARRAY AND REVERSE ORDER 
+            const heartContainer = $heartConatiner.toArray().reverse();
+            heartContainer[heartCounter].className = 'far fa-heart';
+        }
+
+        // CLICK THROUGH SCENES
+        // USE counter VARIABLE TO ITERATE THROUGH scenes[item]
+        counter = counter + 1;
+        $gameplayImage.attr('src', `${scenes[counter].image}`);
+        $gameplayText.text(`${scenes[counter].text}`);
+        // STOP CLICK EVENT BEFORE LOSE SCENE
+        if (counter >= 5) {
+            $(this).off(event);
+        }
+
+        // CONDITIONAL IF HEARTS ARE COUNTED THROUGH, DISPLAY GAME OVER
+        // PLACED AFTER EVERYTHING SO IT RUNS LAST
+        if (heartCounter >= 2) {
+            $(this).off(event);
+            // DISPLAY LOSE IMAGE & TEXT
+            $gameplayImage.attr('src', `${scenes[6].image}`);
+            $gameplayText.text(`${scenes[6].text}`);
+            // ANIMATE BLACK OVERLAY ON LOSE SCREEN
+            $('.overlay').animate({
+                opacity: 1,
+            }, 10000, function () { });
+        }
+    });
 }
 
 // APP init
