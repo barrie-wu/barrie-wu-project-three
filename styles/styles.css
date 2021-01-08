@@ -277,10 +277,10 @@ h1 {
 }
 
 p, li {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 
-.gameText {
+.gameText, button {
   font-size: 1.4rem;
 }
 
@@ -337,6 +337,10 @@ h1 {
   margin-right: 15px;
 }
 
+main {
+  position: relative;
+}
+
 main .gameImage {
   height: auto;
   overflow: hidden;
@@ -353,10 +357,11 @@ main .gameText {
 
 .gameImage .overlay {
   background-image: url(.././assets/gameOverOverlay.jpg);
+  background-size: contain;
   height: 100%;
   width: 100%;
   position: absolute;
-  z-index: 99;
+  z-index: 90;
   opacity: 0;
 }
 
@@ -364,8 +369,30 @@ main .gameText {
   width: 100%;
 }
 
+.gameImage .hitOverlay {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 110;
+  opacity: 0;
+}
+
+.gameImage .hitOverlay i {
+  font-size: 15rem;
+  margin-top: 10px;
+}
+
+.gameImage .hitOverlay .skull {
+  color: #751b1b;
+}
+
+.gameImage .hitOverlay .wolf {
+  color: #20aa2c;
+}
+
 .gameText {
-  height: 200px;
   padding: 15px 50px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -433,6 +460,48 @@ main .gameText {
   display: none;
 }
 
+.startWindow {
+  display: none;
+  background-color: #751b1b;
+  color: #e2dcd4;
+  border: 5px solid #363636;
+  border-radius: 10px;
+  margin: 0 30px;
+  padding: 35px;
+  position: absolute;
+  top: 5%;
+  z-index: 120;
+}
+
+.startWindow p {
+  margin-bottom: 30px;
+}
+
+.startWindow .startWindowButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.startWindow .startWindowButtons button {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.startWindow .startWindowButtons button:hover, .startWindow .startWindowButtons button:focus, .startWindow .startWindowButtons button:active {
+  background-color: #363636;
+  color: #e2dcd4;
+}
+
+.startWindow .startWindowButtons button:first-child {
+  margin-right: 25%;
+}
+
 footer {
   color: #e2dcd4;
   background-color: #363636;
@@ -456,6 +525,12 @@ footer p a:hover, footer p a:focus, footer p a:active {
   color: red;
 }
 
+@media (max-width: 510px) {
+  .gameImage .hitOverlay i {
+    font-size: 13rem;
+  }
+}
+
 @media (max-width: 450px) {
   h1 {
     font-size: 4rem;
@@ -466,10 +541,19 @@ footer p a:hover, footer p a:focus, footer p a:active {
   .gameText {
     font-size: 1rem;
   }
+  .gameImage .hitOverlay i {
+    font-size: 10rem;
+  }
 }
 
 @media (max-width: 400px) {
   .gameplay fieldset input {
     margin-right: 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  .gameImage .hitOverlay i {
+    font-size: 8rem;
   }
 }

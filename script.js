@@ -30,36 +30,37 @@ const app = {};
 const $characterNameInput = $('.characterNameInput');
 const $gameplayImage = $('.gameImage img');
 const $gameplayText = $('.gameTextPlay p');
-const $heartConatiner = $('i');
+const $heartConatiner = $('.hearts');
+const $startWindow = $('.startWindow');
 
 // CREATE OBJECT WITH SCENES
 const scenes = [
     {
-        text: `You ran into a werewolf! Are you ready to fight? Choose carefully...`,
+        text: `In the darkenss, you see the glowing eyes of a werewolf! Are you ready to fight? Choose carefully...`,
         image: `./assets/scene1.jpg`
     },
     {
-        text: `Another band of vikings are in your way! Will you run, or stand and fight!?`,
+        text: `Another band of vikings are blocking your way! Will you run, or stand and fight!?`,
         image: `./assets/scene2.jpg`
     },
     {
-        text: `The dead have risen to fight again. Will you keep fighting?`,
+        text: `A curse of RAGNAROK has brought your enemies back to life! Can you hold them off?`,
         image: `./assets/scene3.jpg`
     },
     {
-        text: `Your fellow vikings have all perished...How will you proceed...`,
+        text: `A loud screech has caused your warriors to scatter. Will you face the banshee alone?`,
         image: `./assets/scene4.jpg`
     },
     {
-        text: `Hel is impressed, and demands your soul be taken to the underworld under her dominion...`,
+        text: `Hel is impressed by your destruction and demands your soul be taken to the underworld under her dominion...`,
         image: `./assets/scenefinal.jpg`        
     },
     {
-        text: `You live to see another day!`,
+        text: `Glorious victory! A new homeland awaits...`,
         image: `./assets/sceneWin.jpg`
     },
     {
-        text: `You died...`,
+        text: `All is lost...Valhalla awaits those glorious in death.`,
         image: `./assets/sceneGameOver.jpg`
     }
 ]
@@ -89,11 +90,6 @@ app.fillHearts = () => {
     });
 }
 
-app.emptyHearts = ()  => {
-    
-}
-
-
 // FUNCTION TO ENTER CHARACTER NAME AND START GAME
 app.gameStart = () => {
     // CREATE EVENT LISTENER ON FORM SUBMIT
@@ -114,6 +110,8 @@ app.gameStart = () => {
             $gameplayImage.attr('src', `${scenes[0].image}`)
             // FILL .gameTextPlay WITH FIRST SCENE TEXT PROPERTY
             $gameplayText.text(`${scenes[0].text}`);
+            // REVEAL .startWindow
+            $startWindow.show();
             // REVEAL GAME PLAY TEXT
             $('.gameTextPlay').show();
             // REMOVE CHARACTER NAME INPUT
@@ -122,6 +120,16 @@ app.gameStart = () => {
             // ALERT IF EMPTY CHARACTER NAME STRING
             alert("Please enter a character name!");
         };
+    });
+}
+
+// FUNCTION FOR .startWindow 
+app.handleStartWindow = () => {
+    $('.startButton').on('click', () => {
+        $startWindow.hide();
+    });
+    $('.cancelButton').on('click', () => {
+        window.location.reload();
     });
 }
 
@@ -137,15 +145,15 @@ app.userWeaponChoice = function () {
         // PREVENT SUBMIT DEFAULT
         event.preventDefault();
         // PUT USER INPUT IN A VARIABLE
-        const userWeaponInput = $('input[name=weapon]:checked').val();
+        const userChoiceInput = $('input[name=choice]:checked').val();
         // CONDITIONAL OF USER CHOICE TO ROLL ODDS
         // STORE oddsOutcome IN VARIABLE OUTIDE OF CONDITIONAL FOR heartContainer CONDITIONAL
         oddsOutcome = 0
-        if (userWeaponInput === 'fight') {
+        if (userChoiceInput === 'fight') {
             oddsOutcome = app.randomizer(odds.bestOdds);
-        } else if (userWeaponInput === 'defend') {
+        } else if (userChoiceInput === 'defend') {
             oddsOutcome = app.randomizer(odds.betterOdds);
-        } else if (userWeaponInput === 'flee') {
+        } else if (userChoiceInput === 'flee') {
             oddsOutcome = app.randomizer(odds.worstOdds);
         };
 
@@ -156,6 +164,18 @@ app.userWeaponChoice = function () {
             // CHANGE <i>s TO AN ARRAY AND REVERSE ORDER 
             const heartContainer = $heartConatiner.toArray().reverse();
             heartContainer[heartCounter].className = 'far fa-heart';
+            // DISPLAY SKULL ICON IF HIT
+            $('.skullOverlay').animate({
+                opacity: 1,
+            }, 150).animate({
+                opacity: 0,
+            }, 300);
+        } else if (oddsOutcome === 1) {
+            $('.wolfOverlay').animate({
+                opacity: 1,
+            }, 150).animate({
+                opacity: 0,
+            }, 300);
         }
 
         // CLICK THROUGH SCENES
@@ -178,7 +198,7 @@ app.userWeaponChoice = function () {
             // ANIMATE BLACK OVERLAY ON LOSE SCREEN
             $('.overlay').animate({
                 opacity: 1,
-            }, 10000, function () { });
+            }, 4000, function () {});
         }
     });
 }
@@ -186,6 +206,7 @@ app.userWeaponChoice = function () {
 // APP init
 app.init = () => {
     app.gameStart();
+    app.handleStartWindow();
     app.userWeaponChoice();
 };
 

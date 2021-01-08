@@ -1,14 +1,21 @@
+@media (max-width: 510px) {
+    .gameImage .hitOverlay i {
+        font-size: 13rem;
+    }
+}
+
 @media (max-width: 450px) {
     h1 {
         font-size: 4rem;
     }
-
     p, li {
         font-size: 1.2rem;
     }
-
     .gameText {
         font-size: 1rem;
+    }
+    .gameImage .hitOverlay i {
+        font-size: 10rem;
     }
 }
 
@@ -17,5 +24,11 @@
         input {
             margin-right: 10px;
         }
+    }
+}
+
+@media (max-width: 350px) {
+        .gameImage .hitOverlay i {
+        font-size: 8rem;
     }
 }
