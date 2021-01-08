@@ -53,7 +53,7 @@ const scenes = [
     },
     {
         text: `Hel is impressed by your destruction and demands your soul be taken to the underworld under her dominion...`,
-        image: `./assets/scenefinal.jpg`        
+        image: `./assets/sceneS.jpg`        
     },
     {
         text: `Glorious victory! A new homeland awaits...`,
